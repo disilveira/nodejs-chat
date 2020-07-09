@@ -9,13 +9,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 io.on('connection', (socket) => {
-    console.log(`User connected with id ${socket.id}`)
+  console.log(`User connected with id ${socket.id}`)
+  socket.on('clientMessage', msgContent => {
+    socket.broadcast.emit('groupMessage', msgContent)
+  })
 })
 
 app.get('/', (req, res) => {
     res.render('index')
 })
 
-http.listen(80, () => {
+http.listen(3000, () => {
   console.log('Listening on port 3000')
 })
